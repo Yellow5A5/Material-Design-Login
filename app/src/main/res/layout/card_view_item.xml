@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<yellow5a5.materialdesignlogin.View.AnimCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/anim_cardview"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_margin="10dp"
+    card_view:cardCornerRadius="10dp">
+
+
+    <EditText
+        android:id="@+id/input_edit_v"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00000000"
+        android:ellipsize="none"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:text="Hello World!" />
+
+
+</yellow5a5.materialdesignlogin.View.AnimCardView>

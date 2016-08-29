@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ff3e52b0"
+    tools:context="yellow5a5.materialdesignlogin.LoginActivity">
+
+    <yellow5a5.materialdesignlogin.View.CatchScrollLayout
+        android:id="@+id/catch_sroll_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+    </yellow5a5.materialdesignlogin.View.CatchScrollLayout>
+
+    <!--<include layout="@layout/sign_up_content_layout"/>-->
+
+    <Button
+        android:id="@+id/begin_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="启动" />
+
+    <Button
+        android:id="@+id/close_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/begin_btn"
+        android:text="关闭" />
+
+</RelativeLayout>
