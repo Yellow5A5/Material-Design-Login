@@ -2,10 +2,13 @@ package yellow5a5.materialdesignlogin.View;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.LinearInterpolator;
 
 import yellow5a5.materialdesignlogin.IView.IAnimCard;
 
@@ -14,7 +17,7 @@ import yellow5a5.materialdesignlogin.IView.IAnimCard;
  */
 public class AnimCardView extends CardView implements IAnimCard {
 
-    private int ANIM_DURATION_TIME = 600;
+    private int ANIM_DURATION_TIME = 6000;
 
     private ValueAnimator mScaleAnim;
     private ValueAnimator mAlphaAnim;
@@ -33,9 +36,9 @@ public class AnimCardView extends CardView implements IAnimCard {
     }
 
     public void initAnim() {
-        mAlphaAnim = ValueAnimator.ofFloat(1.0f,0f);
+        mAlphaAnim = ValueAnimator.ofFloat(1.0f, 0f);
         mAlphaAnim.setDuration(ANIM_DURATION_TIME);
-        mAlphaAnim.setInterpolator(new AccelerateInterpolator());
+        mAlphaAnim.setInterpolator(new LinearInterpolator());
         mAlphaAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -58,14 +61,19 @@ public class AnimCardView extends CardView implements IAnimCard {
     }
 
     @Override
-    public void showSelf() {
-        mScaleAnim.start();
-        mAlphaAnim.start();
-    }
+    public void setAnimCurrentTime(int process, boolean isLeft) {
+        if(isLeft){
+            process = 100 - process;
+        }
+        float currentTime = process / 100.0f;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            mScaleAnim.setCurrentFraction(currentTime);
+            mAlphaAnim.setCurrentFraction(currentTime);
+            Log.d(AnimCardView.class.getName(), "setAnimCurrentTime: currentTime: " + process);
+        } else {
+            mScaleAnim.setCurrentPlayTime((long) (currentTime * ANIM_DURATION_TIME));
+            mAlphaAnim.setCurrentPlayTime((long) (currentTime * ANIM_DURATION_TIME));
+        }
 
-    @Override
-    public void hideSelf() {
-        mScaleAnim.reverse();
-        mAlphaAnim.reverse();
     }
 }

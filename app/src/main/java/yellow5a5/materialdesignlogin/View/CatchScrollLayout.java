@@ -3,7 +3,6 @@ package yellow5a5.materialdesignlogin.View;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -21,8 +20,19 @@ import yellow5a5.materialdesignlogin.R;
  */
 public class CatchScrollLayout extends LinearLayout implements ICatchScroll {
 
-    private UnderlineDevider mUnderlineDevider;
     private LinearLayout mTitleLayout;
+    private UnderlineDevider mUnderlineDevider;
+
+
+    private IScrollCallBack mIScrollCallBack;
+
+    public interface IScrollCallBack {
+        void onScrollProcess(int process, boolean isLeft);
+    }
+
+    public void setIScrollCallBack(IScrollCallBack l) {
+        mIScrollCallBack = l;
+    }
 
     public CatchScrollLayout(Context context) {
         this(context, null);
@@ -42,6 +52,14 @@ public class CatchScrollLayout extends LinearLayout implements ICatchScroll {
         LayoutInflater.from(context).inflate(R.layout.title_scroll_layout, this, true);
         mUnderlineDevider = (UnderlineDevider) findViewById(R.id.underline_v);
         mUnderlineDevider.setDevider(2);
+        mUnderlineDevider.setIMoveCallBack(new UnderlineDevider.IMoveCallBack() {
+            @Override
+            public void onMove(int process, boolean isLeft) {
+                if (mIScrollCallBack != null) {
+                    mIScrollCallBack.onScrollProcess(process, isLeft);
+                }
+            }
+        });
     }
 
     @Override
@@ -83,29 +101,16 @@ public class CatchScrollLayout extends LinearLayout implements ICatchScroll {
 
     }
 
-    private IScrollCallBack mIScrollCallBack;
-
-    public interface IScrollCallBack{
-        void onScrollProcess(int process, boolean isLeft);
-    };
-
-    public void setIScrollCallBack(IScrollCallBack l){
-        mIScrollCallBack = l;
-    }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         final int x = (int) event.getX();
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            if(mIScrollCallBack != null){
-                int MAX_DISPLACEMENT = 500;
+            if (mIScrollCallBack != null) {
                 int nowDisplacement = x - downX;
-                if (nowDisplacement > MAX_DISPLACEMENT)
-                    nowDisplacement = MAX_DISPLACEMENT;
-                mUnderlineDevider.move(nowDisplacement, 0);
+                mUnderlineDevider.move(nowDisplacement);
             }
-        } else if (event.getAction() == MotionEvent.ACTION_UP){
-            mUnderlineDevider.fitPosition();
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            mUnderlineDevider.updateAnimFinally();
         }
         return super.onTouchEvent(event);
     }
@@ -125,4 +130,8 @@ public class CatchScrollLayout extends LinearLayout implements ICatchScroll {
         return super.onInterceptTouchEvent(event);
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
+    }
 }

@@ -20,9 +20,13 @@ import java.util.ArrayList;
 public class UnderlineDevider extends View {
 
     private static final int HEIGHT_DEFAULT = 1;
-    private static final int ELASTIC_FACTOR = 10;
+    private static final int ELASTIC_FACTOR = 30;
+
+    private static final int PROCESS_FINISH = 100;
+    private static final int ANIM_TIME = 300;
 
     private Paint mPaint;
+    private boolean isLeft;
     private int mWidth;
     private int mHeight;
     private int mDevederWidth;
@@ -31,19 +35,22 @@ public class UnderlineDevider extends View {
     private ArrayList<Point> mTopPosition;
     private ArrayList<Point> mBottomPosition;
 
+    private int mCurrentTabNum;
     private Point mCurrentPoint;
     private Point mLastPoint;
+
+    private ValueAnimator mMoveAnimator;
 
     private boolean isDrawFlag = false;
     private boolean isFinishCount = false;
 
-    interface IMoveCallBack{
-        void onMove(int process);
-    };
+    interface IMoveCallBack {
+        void onMove(int process, boolean isLeft);
+    }
 
     private IMoveCallBack mIMoveCallBack;
 
-    public void setIMoveCallBack(IMoveCallBack l){
+    public void setIMoveCallBack(IMoveCallBack l) {
         mIMoveCallBack = l;
     }
 
@@ -78,42 +85,38 @@ public class UnderlineDevider extends View {
         invalidate();
     }
 
-    public void move(int x, int y) {
-        //TODO 这里回调一个process给外面的Layout～
-        if(mIMoveCallBack != null){
-            mIMoveCallBack.onMove();
+    public void move(int x) {
+        if (mIMoveCallBack != null && Math.abs(x) > 1) {
+            int process = Math.abs(x) > mDevederWidth ? PROCESS_FINISH : (int) ((float) (x) / mDevederWidth * PROCESS_FINISH);
+            isLeft = x < 0;
+            mIMoveCallBack.onMove(Math.abs(process), isLeft);
         }
-
-        mCurrentPoint.x = mLastPoint.x + x;
+        mCurrentPoint.x = Math.abs(x) > mDevederWidth + ELASTIC_FACTOR ? mLastPoint.x + (int) (x / Math.abs(x)) * (mDevederWidth + ELASTIC_FACTOR) : mLastPoint.x + x;
+        fixTheCorrectNum();
         invalidate();
     }
-
-    private ValueAnimator mMoveAnimator;
 
     /**
      * 根据当前位置找合适位置移动
      */
-    public void fitPosition() {
-        int tabPosition = mCurrentPoint.x / mDevederWidth;
-        int correctPosition = tabPosition;
-        tabPosition = tabPosition > mCount ? mCount : tabPosition;
-        if (mCurrentPoint.x % mDevederWidth > mDevederWidth / 2) {
-            correctPosition = tabPosition + 1;
-        }
-        if (correctPosition > mCount - 1) {
-            correctPosition = mCount - 1;
-        }
-        if (correctPosition < 0) {
-            correctPosition = 0;
-        }
-        mMoveAnimator = ValueAnimator.ofFloat(mCurrentPoint.x, mDevederWidth * correctPosition)
-                .setDuration(300);
+    public void updateAnimFinally() {
+        mMoveAnimator = ValueAnimator.ofFloat(mCurrentPoint.x, mDevederWidth * mCurrentTabNum)
+                .setDuration(ANIM_TIME);
         mMoveAnimator.setInterpolator(new OvershootInterpolator());
         mMoveAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            boolean isProcessFinish = false;
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float factor = (float) animation.getAnimatedValue();
                 mCurrentPoint.x = (int) factor;
+                if (mIMoveCallBack != null && !isProcessFinish) {
+                    int process = (mCurrentPoint.x - mLastPoint.x) * PROCESS_FINISH / mDevederWidth;
+                    if(Math.abs(process) > PROCESS_FINISH){
+                        process = PROCESS_FINISH;
+                        isProcessFinish = true;
+                    }
+                    mIMoveCallBack.onMove(Math.abs(process), isLeft);
+                }
                 invalidate();
             }
         });
@@ -124,6 +127,21 @@ public class UnderlineDevider extends View {
             }
         });
         mMoveAnimator.start();
+    }
+
+    private void fixTheCorrectNum() {
+        int tabPosition = mCurrentPoint.x / mDevederWidth;
+        mCurrentTabNum = tabPosition;
+        tabPosition = tabPosition > mCount ? mCount : tabPosition;
+        if (mCurrentPoint.x % mDevederWidth > mDevederWidth / 2) {
+            mCurrentTabNum = tabPosition + 1;
+        }
+        if (mCurrentTabNum > mCount - 1) {
+            mCurrentTabNum = mCount - 1;
+        }
+        if (mCurrentTabNum < 0) {
+            mCurrentTabNum = 0;
+        }
     }
 
     @Override
@@ -170,11 +188,17 @@ public class UnderlineDevider extends View {
         if (specMode == MeasureSpec.EXACTLY) {
             result = specSize;
         } else {
-            result = defaultSize;   //UNSPECIFIED
+            result = defaultSize;
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
             }
         }
         return result;
     }
+
+    public int getCurrentTabNum() {
+        return mCurrentTabNum;
+    }
+
+
 }

@@ -5,8 +5,6 @@ package yellow5a5.materialdesignlogin.IView;
  */
 public interface IAnimCard {
 
-    void showSelf();
-
-    void hideSelf();
+    void setAnimCurrentTime(int process, boolean isLeft);
 
 }

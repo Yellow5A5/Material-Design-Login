@@ -2,6 +2,7 @@ package yellow5a5.materialdesignlogin;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -42,16 +43,17 @@ public class LoginActivity extends AppCompatActivity {
         mCatchScrollLayout.setIScrollCallBack(new CatchScrollLayout.IScrollCallBack() {
             @Override
             public void onScrollProcess(int process, boolean isLeft) {
-
+                for (IAnimCard view : mAnimList){
+                    view.setAnimCurrentTime(process,isLeft);
+//                    Log.d(LoginActivity.class.getName(), "onScrollProcess: " + process);
+                }
             }
         });
 
         mStartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (IAnimCard view : mAnimList){
-                    view.showSelf();
-                }
+
             }
         });
 
@@ -59,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 for (IAnimCard view : mAnimList){
-                    view.hideSelf();
+//                    view.setAnimCurrentTime();
                 }
             }
         });
