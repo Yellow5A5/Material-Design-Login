@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
     android:background="#ff3e52b0"
+    android:clickable="true"
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/scroll_title_layout"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:orientation="horizontal"
-        android:layout_gravity="center_vertical">
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,6 +35,9 @@
     <yellow5a5.materialdesignlogin.View.UnderlineDevider
         android:id="@+id/underline_v"
         android:layout_width="match_parent"
-        android:layout_height="2dp"/>
+        android:layout_height="2dp"
+        android:layout_gravity="bottom"
+        app:devide_color="#ffffff"
+        app:devide_count="2" />
 
 </LinearLayout>

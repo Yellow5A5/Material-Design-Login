@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="UnderlineDevider">
+        <attr name="devide_count" format="integer" />
+        <attr name="devide_color" format="color"/>
+    </declare-styleable>
+</resources>
