@@ -2,12 +2,14 @@
 
 ---
 
-This is a Material-Design-login Demo. You can set the state(Sign-Up or Login)  by slip events in this demo, or you can create other animations when progress callback.
+This is a Material-Design-login Demo. You can set the state(Sign-Up or Login)  by slip events in this demo, or you can create other animations when the progress callback.
 
-<img src="/Users/Weiwu/Movies/demo_show1.gif" width=300></img>
-<img src="/Users/Weiwu/Movies/demo_show2.gif" width=300></img>
+<img src="image/demo_show1.gif" width=300></img>
+<img src="image/demo_show2.gif" width=300></img>
 
 ## How To Implements
+
+#### CatchScrollLayout
 
 CatchScrollLayout is responsible for monitoring external sliding events. 
 You can set the area of monitored by setting the height of CatchScrollLayout (“match_parent” usually).
@@ -48,6 +50,8 @@ public void setIScrollCallBack(IScrollCallBack l) {
 }
 ```
 
+### UnderlineDevider
+
 You can change the number of segments by UnderlineDevider. Set it in xml (app:devide_count) or call the method (setDevider). UnderlineDevider is independent, you can use it in any other place.
 
 ```xml
@@ -64,7 +68,8 @@ You can change the number of segments by UnderlineDevider. Set it in xml (app:de
 
 ## Demo－Introduction
 
-You can set the state(Sign-Up or Login)  by slip events. SignUpContainer should contains the logic of logining and registering. It's easy to add other task you wanted or change the method in callback.
+This design ideas come from [Material Design Sign Up / Login
+](http://www.material.uplabs.com/posts/material-design-sign-up-login)(by Dhanish). You can set the state(Sign-Up or Login)  by slip events. SignUpContainer should contains the logic of logining and registering. It's easy to add other task you wanted or change the method in callback.
 
 ```java
 
