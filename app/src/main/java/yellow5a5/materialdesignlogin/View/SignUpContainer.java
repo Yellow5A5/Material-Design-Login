@@ -44,7 +44,8 @@ public class SignUpContainer extends RelativeLayout {
     private ValueAnimator mContainerAnim;
     private ValueAnimator mFirCvAnim;
 
-    interface IConfirmCallBack {
+    public interface IConfirmCallBack {
+        //you can change it to get the parameters what you wanted.
         void goNext();
     }
 
@@ -155,4 +156,5 @@ public class SignUpContainer extends RelativeLayout {
         return String.valueOf(mPassWordEt.getText());
     }
 
+    //you can add others~
 }

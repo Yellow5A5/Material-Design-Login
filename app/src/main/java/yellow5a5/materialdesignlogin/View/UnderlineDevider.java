@@ -24,10 +24,9 @@ public class UnderlineDevider extends View {
 
     private static final int HEIGHT_DEFAULT = 1;
     private static final int PROCESS_FINISH = 100;
-    /* 两边留下一些空间*/
-    private static final int ELASTIC_FACTOR = 30;
-    /* 动画时长*/
     private static final int ANIM_DURATION = 400;
+    /* Leave some space on both sides*/
+    private static final int ELASTIC_FACTOR = 30;
 
     private Paint mPaint;
     private boolean isLeft;
@@ -87,6 +86,10 @@ public class UnderlineDevider extends View {
         setDevider(mDevideCount);
     }
 
+    /**
+     * Set the number of Segments
+     * @param count
+     */
     public void setDevider(int count) {
         mDevideCount = count;
         isFinishCount = false;
@@ -94,6 +97,7 @@ public class UnderlineDevider extends View {
         mBottomPosition.clear();
         invalidate();
     }
+
 
     public void move(int x) {
         if(isOutOfBorder(x))
@@ -108,7 +112,7 @@ public class UnderlineDevider extends View {
     }
 
     /**
-     * 根据当前位置找合适位置移动
+     * To find the right position according to the current position
      */
     public void updateAnimFinally() {
         fixTheCorrectNum();
@@ -144,6 +148,9 @@ public class UnderlineDevider extends View {
         mMoveAnimator.start();
     }
 
+    /**
+     * Fix Current-tab's number.
+     */
     private void fixTheCorrectNum() {
         int tabPosition = mCurrentPoint.x / mDevederWidth;
         mCurrentTabNum = tabPosition;

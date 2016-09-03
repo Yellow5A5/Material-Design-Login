@@ -11,7 +11,8 @@ import yellow5a5.materialdesignlogin.R;
 /**
  * Created by Weiwu on 16/8/25.
  * <p/>
- * CatchScrollLayout负责监听外部的滑动事件。
+ * CatchScrollLayout
+ * It is responsible for monitoring external sliding events.
  */
 public class CatchScrollLayout extends LinearLayout{
 

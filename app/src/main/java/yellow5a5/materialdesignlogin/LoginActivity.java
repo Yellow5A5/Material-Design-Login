@@ -31,5 +31,15 @@ public class LoginActivity extends AppCompatActivity {
                 mSignUpContainer.setAnimProportion(process);
             }
         });
+
+        mSignUpContainer.setIConfirmCallBack(new SignUpContainer.IConfirmCallBack() {
+            @Override
+            public void goNext() {
+                //TODO
+            }
+        });
+
+
+
     }
 }
