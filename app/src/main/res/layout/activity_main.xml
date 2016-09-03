@@ -16,7 +16,25 @@
         android:orientation="vertical"
         android:clickable="true">
 
+
+        <TextView
+            android:id="@+id/process_tip"
+            android:textSize="16sp"
+            android:paddingTop="50dp"
+            android:text="To get the current progress when touch-moving "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/process_show"
+            android:textSize="24sp"
+            android:padding="50dp"
+            android:text="0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <yellow5a5.materialdesignlogin.View.SignUpContainer
+            android:visibility="gone"
             android:id="@+id/sign_up_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

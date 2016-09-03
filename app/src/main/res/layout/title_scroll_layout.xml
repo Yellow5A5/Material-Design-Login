@@ -30,7 +30,16 @@
             android:text="Login"
             android:textColor="@android:color/white" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Other"
+            android:textColor="@android:color/white" />
     </LinearLayout>
+
+
 
     <yellow5a5.materialdesignlogin.View.UnderlineDevider
         android:id="@+id/underline_v"
@@ -38,6 +47,6 @@
         android:layout_height="2dp"
         android:layout_gravity="bottom"
         app:devide_color="#ffffff"
-        app:devide_count="2" />
+        app:devide_count="3" />
 
 </LinearLayout>
