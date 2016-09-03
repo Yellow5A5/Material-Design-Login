@@ -35,7 +35,8 @@ public class LoginActivity extends AppCompatActivity {
         mSignUpContainer.setIConfirmCallBack(new SignUpContainer.IConfirmCallBack() {
             @Override
             public void goNext() {
-                //TODO
+                //change this method and add the parameters you wanted
+                //Add your task here.
             }
         });
 
